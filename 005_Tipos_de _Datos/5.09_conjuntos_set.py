@@ -148,3 +148,31 @@ print('Cantidad de elementos diferencia_simetrica: ', len(diferencia_simetrica))
 print('Tipo de datos diferencia_simetrica: ', type(diferencia_simetrica))
 
 print()
+
+print('== Remover Elementos de un conjunto ==')
+
+colores.remove('Negro')
+print('Contenido colores: ', colores)
+print('Cantidad de elementos colores: ', len(colores))
+print('Tipo de datos colores: ', type(colores))
+
+print()
+
+print('== Remover Elementos de un conjunto arbitrariamente ==')
+
+color = colores.pop()
+print('Se elimino el color: ', color)
+print('Contenido colores: ', colores)
+print('Cantidad de elementos colores: ', len(colores))
+print('Tipo de datos colores: ', type(colores))
+
+print()
+
+print('== Remover Todos Elementos de un conjunto ==')
+
+colores.clear()
+print('Contenido colores: ', colores)
+print('Cantidad de elementos colores: ', len(colores))
+print('Tipo de datos colores: ', type(colores))
+
+print()
