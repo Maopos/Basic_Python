@@ -158,7 +158,7 @@ print('Tipo de datos colores: ', type(colores))
 
 print()
 
-print('== Remover Elementos de un conjunto arbitrariamente ==')
+print('== Remover Elementos de un conjunto al azar ==')
 
 color = colores.pop()
 print('Se elimino el color: ', color)
