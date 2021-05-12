@@ -13,9 +13,9 @@ diccionario_2['prop2'] = 'dos'
 diccionario_2['prop3'] = [1, 2, 3]
 
 
-print(diccionario_1)
+print('dict__1', diccionario_1)
 print(type(diccionario_1))
-print(diccionario_2)
+print('dict__2', diccionario_2)
 print(type(diccionario_2))
 
 print()
