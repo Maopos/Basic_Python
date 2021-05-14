@@ -22,7 +22,6 @@ while i < len(numeros):
     total += numeros[i]
     i += 1
 
-numeros.append(100)
 
 print('Lista de numeros: ', numeros)
 print('La suma de la lista es: ', total)
@@ -31,6 +30,7 @@ print()
 
 print('=== Sumar numeros pares con ciclo while ===')
 
+numeros.append(100)
 
 i = 0
 total = 0
@@ -47,7 +47,7 @@ print('=== Terminacion arbitraria de un ciclo while ===')
 
 total = 0
 while True:
-    numero = int(input('Escriba un numero entero positivo (Cero para termninar): '))
+    numero = int(input('Escriba un numero entero positivo (Cero para terminar): '))
     if numero == 0:
         break
     
