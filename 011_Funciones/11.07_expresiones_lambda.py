@@ -71,7 +71,31 @@ pares = list(filter(filtro, numeros))
 print('\nContenido de pares: ', pares)
 print('Cantidad de elementos en pares: ', len(pares))
 
+print()
 
+print('=== Funcion map() para mapeo del contenido de una lista ===')
+
+def elevar_cuadrados(lista):
+    cuadrados = []
+
+    for i in lista:
+        cuadrados.append(i ** 2)
+    
+    return cuadrados
+
+resultado = elevar_cuadrados(numeros)
+
+print('Lista: ', numeros)
+print('Los Cuadrados son: ', resultado)
+
+resultado = [n ** 2 for n in numeros]
+
+print('\nLista: ', numeros)
+print('Los Cuadrados son: ', resultado)
+
+resultado = list(map(lambda n: n ** 2, numeros))
+print('\nLista: ', numeros)
+print('Los Cuadrados son: ', resultado)
 
 print()
 print('======================')

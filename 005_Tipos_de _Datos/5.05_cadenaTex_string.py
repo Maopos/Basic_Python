@@ -56,10 +56,17 @@ print()
 
 # Metodo split
 
+
+print('=== # Metodo split ===')
+
+
+
+print()
+
 colores = 'Amarillo Azul Rojo Verde'
 lista_colores = colores.split(' ')
 
-print(len(lista_colores))
+print('Cantidad de elelmentos: ', len(lista_colores))
 
 print(lista_colores)
 print()
