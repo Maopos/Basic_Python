@@ -113,6 +113,8 @@ def top_5_menos_vendidos(ventas):
     Returns:
     lista de tuplas con el top 5 de los productos menos vendidos. (id_producto, cantidad)
     '''
+    conteo_ventas = {}
+
     for i in ventas:
         if i['ID'] in conteo_ventas:
             conteo_ventas[i['ID']] += i['Cantidad']
@@ -143,6 +145,7 @@ def mostrar_ventas(venta):
     Muestra los datos de una venta.
     
     Parameters:
+    ventas: Listado de ventas
     venta: Venta a consultar
     
     Returns:
@@ -151,5 +154,8 @@ def mostrar_ventas(venta):
     for i in venta:
         print('{}: {}'.format(i, venta[i]))
 
-def mostrar_datos_venta():
-    pass
+def mostrar_datos_venta_producto(productos, datos_venta):
+    producto = buscar_producto(productos, datos_venta[0])
+    mostrar_producto(producto)
+    print('Cantidad vendida: %i' % datos_venta[1])
+    print()
