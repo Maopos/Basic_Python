@@ -1,0 +1,19 @@
+
+Pilares de la programación orientada a objetos.
+-----------------------------------------------
+
+
+Abstraccion:
+    Traer a la entidad las caracteristicas(atributos) y comportamientos (Metodos) desde la realidad. pertinentes a la solucion que estamos buscando.
+
+
+Encapsulación:
+    Protege las propiedades de una entidad segun sean públicos o privados.
+
+
+Herencia:
+    Mecanismo que nos permite reutilizar codigo, atributos y métodos que pasan de una clase a otra para evitar duplicidad de código.
+
+
+Polimorfismo:
+    Si en una porción de código se invoca un determinado método de un objeto, podrán obtenerse distintos resultados según la clase del objeto.

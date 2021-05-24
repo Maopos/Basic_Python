@@ -1,4 +1,7 @@
 from .inventario_funciones import *
+import os
+import pickle
+
 #import inventario_funciones as pro
 
 import datetime
@@ -19,6 +22,8 @@ def mostrar_menu():
     print('5 >>> Generar reporte productos vendidos en un rango de fecha.')
     print('6 >>> Ver top 5 de los productos más vendidos.')
     print('7 >>> Ver top 5 de los productos menos vendidos.')
+    print('8 >>> Mostrar Inventario.')
+    # print('9 >>> Guardar')
     print()
     print('0 >>> Salir')
     print()
@@ -86,24 +91,44 @@ def listar_productos(productos):
     for i in productos:
         print(f"{i['ID']}      {i['Nombre']}       {i['Cantidad']}     {i['Precio']}")
 
+
 def continuar():
     print('Presione Enter para continuar...', end='')
     input()
 
+def cargar_inventario():
+    with open('inventario/inventario.pickle', 'rb') as f:
+        inventario = pickle.load(f)
+        return inventario
+
+def guardar_datos(productos, ventas):
+    with open('inventario/inventario.pickle', 'wb') as f:
+        inventario = {'productos': productos, 'ventas': ventas}
+
+        pickle.dump(inventario, f)
+
+
 
 def main():
-    productos = []
-    ventas = []
+    if os.path.isfile('inventario/inventario.pickle'):
+        inventario = cargar_inventario()
+        productos = inventario['productos']
+        ventas = inventario['ventas']
+        
+    else:
+        productos = []
+        ventas = []
+        print('\n** No existe un inventario.\n')
 
     while True:
         while True:
             try:
                 mostrar_menu()
                 opcion = int(input('Digite la operación a realizar: '))
-                if 0 <= opcion <= 7:
+                if 0 <= opcion <= 8:
                     break
                 else:
-                    print('\n*** Debe digitar un número positivo entre 0 y 7 ***\n')
+                    print('\n*** Debe digitar un número positivo entre 0 y 8 ***\n')
                 
                 continuar()
                 
@@ -118,6 +143,7 @@ def main():
                 id_producto = capturar_entero('Digite el ID del producto')
 
                 if id_producto > 0:
+                    
                     producto = buscar_producto(productos, id_producto)
                 
                     if producto is None:
@@ -189,7 +215,7 @@ def main():
                     else:
                         print('\n*** Debe digitar una cantidad mayor a cero(0)!!! ***\n')
 
-                nueva_venta = {'ID': id_producto, 'Nombre': nombre_producto, 'Cantidad': cantidad_producto, 'Total sin Iva': producto['Precio'] * cantidad_producto}
+                nueva_venta = {'ID': id_producto, 'Cantidad': cantidad_producto, 'Total sin Iva': producto['Precio'] * cantidad_producto}
 
                 realizar_venta(ventas, nueva_venta)
                 print('\nTotal venta: $%.2f' % (nueva_venta['Total sin Iva'] * 1.19))
@@ -322,11 +348,41 @@ def main():
 
             else:
                 print('\n*** No existen productos en el inventario. ***\n')
-        continuar()
-
         
+        elif opcion == 8:
+            print('\n-- Listado de productos. --\n')
 
+            if len(productos):
+                listar_productos(productos)
+                
+                print('\n-- Listado de ventas. --\n')
+
+                for i in productos:
+                    for k in ventas:
+                        if i['ID'] == k['ID']:
+                            k['Nombre'] = i['Nombre']
+                    
+                
+                print(f'ID         Producto        Cantidad Vendida        Fecha')
+
+                for i in ventas:
+                    print(f"{i['ID']}       {i['Nombre']}               {i['Cantidad']}                     {i['fecha']}")
+
+
+
+                print()
+            else:
+                print('\n*** No existen productos en el inventario. ***\n')
+        
+           
+        continuar()
     
+    if len(productos):
+        if guardar_datos(productos, ventas):
+            print('\n** Se han guardado los datos con éxito.\n')
+        else:
+            ('No se han guardado los datos.')
+
 
     print('\n=== El programa ha finalizado. ==\n\n===========================================================\n')
 
