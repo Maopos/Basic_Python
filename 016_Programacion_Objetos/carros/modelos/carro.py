@@ -19,8 +19,8 @@ class Carro:
 
     def acelerar(self):
         if self.estado:
-            print('El carro ha acelerado.')
+            print('El vehiculo ha acelerado.')
 
     def frenar(self):
         if self.estado:
-            print('El carro ha frenado')
+            print('El vehiculo ha frenado')

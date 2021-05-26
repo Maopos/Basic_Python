@@ -1,12 +1,21 @@
-# Creacion de objetos - instanciación
-# Para importar crear archivo __init__.py en /modelos
+from modelos.pato import Pato
+from modelos.gato import Gato
+from modelos.perro import Perro
 
-from modelos.carro import Carro 
+
 
 def main():
     print('======================\n')
 
-    toreto = Carro('Toreto', 'ABC-123', 'Mazda', 2016, 'Mexico')
+    animales = []
+
+    donald = Pato('Donald', '2 años', 'Anas Platyrhychos domesticus', 'Verde')
+    felix = Gato('Felix', '1 año', 'Felis catus', True)
+    pluto = Perro('Pluto', '3 años', 'Canis lupus familiares', 'Terrier')
+
+    animales.append(donald)
+    animales.append(felix)
+    animales.append(pluto)
     
     print('Tipo de dato: ', type(toreto).__name__)
     print()
@@ -38,10 +47,8 @@ def main():
     toreto.apagar()
     print('Estado:  ', 'Encendido' if toreto.estado else 'Apagado')
     print()
-
-
-
-
+    
+    
     
     
     print('\n======================')
