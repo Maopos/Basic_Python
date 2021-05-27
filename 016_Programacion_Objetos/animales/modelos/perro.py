@@ -9,5 +9,5 @@ class Perro(Animal):
     def jugar(self):
         print('El perro esta ladrando.')
         
-    # def hablar(self):
-    #     print('Guau Guau!!')
+    def hablar(self):
+        print('Guau Guau!!')

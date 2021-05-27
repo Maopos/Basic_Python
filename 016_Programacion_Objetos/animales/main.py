@@ -17,38 +17,23 @@ def main():
     animales.append(felix)
     animales.append(pluto)
     
-    print('Tipo de dato: ', type(toreto).__name__)
-    print()
-
-    print('=== Atributos ===')
-    print()
-
-    print('Nombre:  ', toreto.nombre)
-    print()
-
-    print('Placa:   ', toreto.placa)
-    print('Marca:   ', toreto.marca)
-    print('Modelo:  ', toreto.modelo)
-    print('Pais:    ', toreto.pais)
-    print('Estado:  ', 'Encendido' if toreto.estado else 'Apagado')
-
+    print('=== Nombres de Animales ===\n')
+    
+    for i in animales:
+        print(i.nombre)
+        
+    print('\n=== Metodo hablar ===\n')
+        
+    for i in animales:
+        i.hablar()   
+        
     print()
     
-    print('=== Métodos ===\n')
-    
-    toreto.encender()
-    print('Estado:  ', 'Encendido' if toreto.estado else 'Apagado')
-    print()
-    
-    toreto.acelerar()
-    toreto.frenar()
+    print('\n=== Atributos ===')
     print()
 
-    toreto.apagar()
-    print('Estado:  ', 'Encendido' if toreto.estado else 'Apagado')
-    print()
     
-    
+
     
     
     print('\n======================')
