@@ -1,4 +1,6 @@
-from .inventario_funciones import *
+from .modelos.inventario import Inventario
+from .modelos.producto import Producto
+from .modelos.venta import Venta
 import os
 import pickle
 
@@ -89,7 +91,7 @@ def capturar_string(mensaje):
 def listar_productos(productos):
     print(f'ID  Producto    Cantidad    Precio')
     for i in productos:
-        print(f"{i['ID']}      {i['Nombre']}       {i['Cantidad']}     {i['Precio']}")
+        print(f"{i.id_producto}      {i.nombre}       {i.cantidad}     {i.precio}")
 
 
 def continuar():
@@ -101,24 +103,24 @@ def cargar_inventario():
         inventario = pickle.load(f)
         return inventario
 
-def guardar_datos(productos, ventas):
+def guardar_datos(inventario):
     with open('inventario/inventario.pickle', 'wb') as f:
-        inventario = {'productos': productos, 'ventas': ventas}
+        
 
         pickle.dump(inventario, f)
 
 
 
 def main():
+
+    inventario = Inventario()
+
     if os.path.isfile('inventario/inventario.pickle'):
-        inventario = cargar_inventario()
-        productos = inventario['productos']
-        ventas = inventario['ventas']
+        resultado = cargar_inventario()
+        inventario.productos = resultado.productos
+        inventario.ventas = resultado.ventas
         
-    else:
-        productos = []
-        ventas = []
-        print('\n** No existe un inventario.\n')
+    
 
     while True:
         while True:
@@ -144,7 +146,7 @@ def main():
 
                 if id_producto > 0:
                     
-                    producto = buscar_producto(productos, id_producto)
+                    producto = inventario.buscar_producto(id_producto)
                 
                     if producto is None:
                         break
@@ -180,23 +182,23 @@ def main():
                     disponible = disponible == 1
                     break
 
-            nuevo_producto = {'ID': id_producto, 'Nombre': nombre_producto,'Precio': precio_producto, 'Cantidad': cantidad_producto, 'Disponibilidad': disponible}
+            nuevo_producto = Producto(id_producto, nombre_producto, precio_producto, cantidad_producto, disponible)
 
-            registrar_producto(productos, nuevo_producto)
+            inventario.registrar_producto(nuevo_producto)
 
             print('\nEl nuevo producto se registro con éxito.\n')
-            listar_productos(productos)
+            listar_productos(inventario.productos)
             print()
             
         elif opcion == 2:
             print('\n-- Registro de nueva Venta --\n')
 
-            if len(productos):
+            if len(inventario.productos):
                 while True:
-                    listar_productos(productos)
+                    listar_productos(inventario.productos)
                     id_producto = capturar_entero('\nDigite el ID del producto a vender')
                     
-                    producto = buscar_producto(productos, id_producto)
+                    producto = inventario.buscar_producto(id_producto)
 
                     if producto:
                         break
@@ -207,18 +209,20 @@ def main():
                     cantidad_producto = capturar_entero('Digite la cantidad a vender de este producto')
 
                     if cantidad_producto > 0 :
-                        if cantidad_producto <= producto['Cantidad']:
+                        if cantidad_producto <= producto.cantidad:
                             break
                         else:
-                            print(f"\n*** Debe digitar una cantidad menor o igual a {producto['Cantidad']} unidades de {producto['Nombre']}!!! ***\n")
+                            print(f"\n*** Debe digitar una cantidad menor o igual a {producto.cantidad} unidades de {producto.nombre}!!! ***\n")
 
                     else:
                         print('\n*** Debe digitar una cantidad mayor a cero(0)!!! ***\n')
+                
+                
 
-                nueva_venta = {'ID': id_producto, 'Cantidad': cantidad_producto, 'Total sin Iva': producto['Precio'] * cantidad_producto}
+                nueva_venta = Venta(id_producto, producto.nombre, cantidad_producto, producto.precio * cantidad_producto)
 
-                realizar_venta(ventas, nueva_venta)
-                print('\nTotal venta: $%.2f' % (nueva_venta['Total sin Iva'] * 1.19))
+                inventario.realizar_venta(nueva_venta)
+                print('\nTotal venta: $%.2f' % (nueva_venta.total_sin_iva * 1.19))
                 print('\nLa venta del producto se registro con éxito.\n')
 
             else:
@@ -228,20 +232,20 @@ def main():
         elif opcion == 3:
             print('\n-- Buscar un producto por ID --\n')
 
-            if len(productos):
+            if len(inventario.productos):
                 while True:
-                    listar_productos(productos)
+                    listar_productos(inventario.productos)
                     id_producto = capturar_entero('\nDigite el ID del producto a buscar')
                     print()
                     
-                    producto = buscar_producto(productos, id_producto)
+                    producto = inventario.buscar_producto(id_producto)
 
                     if producto:
                         break
                     else:
                         print('\n*** El ID no existe. ***\n')
 
-                mostrar_producto(producto)
+                inventario.mostrar_producto(producto)
                 print()
 
             else:
@@ -250,21 +254,23 @@ def main():
         elif opcion == 4:
             print('\n-- Cambiar disponibilidad de producto. --\n')
 
-            if len(productos):
+            if len(inventario.productos):
                 while True:
-                    listar_productos(productos)
+                    listar_productos(inventario.productos)
                     id_producto = capturar_entero('\nDigite el ID del producto a cambiar disponibilidad')
                     print()
                     
-                    producto = buscar_producto(productos, id_producto)
+                    producto = inventario.buscar_producto(id_producto)
 
                     if producto:
+                        
                         break
                     else:
                         print('\n*** El ID no existe. ***\n')
 
-                cambiar_estado_disponibildad(producto)
-                mostrar_producto(producto)
+                inventario.cambiar_estado_disponibildad(producto)
+                inventario.mostrar_producto(producto)
+                print()
 
             else:
                 print('\n*** No existen productos en el inventario. ***\n')
@@ -273,8 +279,8 @@ def main():
         elif opcion == 5:
             print('\n-- Generar un reporte de ventas en un rango de fecha. --\n')
 
-            if len(productos):
-                if len(ventas):
+            if len(inventario.productos):
+                if len(inventario.ventas):
                     while True:
                         try:
                             fecha_inicio = capturar_string('Digite la fecha de inicio (AAAA-MM-DD)')
@@ -294,12 +300,12 @@ def main():
 
                         print()
 
-                    ventas_rango = generar_reporte_X_fecha(ventas, fecha_inicio, fecha_final)
+                    ventas_rango = inventario.generar_reporte_X_fecha(fecha_inicio, fecha_final)
 
                     if len(ventas_rango):
                         for i in ventas_rango:
                             print()
-                            mostrar_ventas(i)
+                            inventario.mostrar_ventas(i)
                             print()
                     else:
                         print('\n*** No hay ventas registradas en ese rango de fecha. ***\n')
@@ -316,13 +322,13 @@ def main():
         elif opcion == 6:
             print('\n-- Top 5 productos mas vendidos. --\n')
 
-            if len(productos):
-                if len(ventas):
-                    productos_mas_vendidos = top_5_mas_vendidos(ventas)
+            if len(inventario.productos):
+                if len(inventario.ventas):
+                    productos_mas_vendidos = inventario.top_5_mas_vendidos()
                     
 
                     for i in productos_mas_vendidos:
-                        mostrar_datos_venta_producto(productos, i)
+                        inventario.mostrar_datos_venta_producto(i)
                         
                 else:
                     print('\n*** No hay ventas registradas. ***\n')
@@ -335,13 +341,13 @@ def main():
         elif opcion == 7:
             print('\n-- Top 5 productos menos vendidos. --\n')
 
-            if len(productos):
-                if len(ventas):
-                    productos_mas_vendidos = top_5_menos_vendidos(ventas)
+            if len(inventario.productos):
+                if len(inventario.ventas):
+                    productos_mas_vendidos = inventario.top_5_menos_vendidos()
                     
 
                     for i in productos_mas_vendidos:
-                        mostrar_datos_venta_producto(productos, i)
+                        inventario.mostrar_datos_venta_producto(i)
                         
                 else:
                     print('\n*** No hay ventas registradas. ***\n')
@@ -352,21 +358,21 @@ def main():
         elif opcion == 8:
             print('\n-- Listado de productos. --\n')
 
-            if len(productos):
-                listar_productos(productos)
+            if len(inventario.productos):
+                listar_productos(inventario.productos)
                 
                 print('\n-- Listado de ventas. --\n')
 
-                for i in productos:
-                    for k in ventas:
-                        if i['ID'] == k['ID']:
-                            k['Nombre'] = i['Nombre']
+                for i in inventario.productos:
+                    for k in inventario.ventas:
+                        if i.id_producto == k.id_producto:
+                            k.id_producto = i.id_producto
                     
                 
                 print(f'ID         Producto        Cantidad Vendida        Fecha')
 
-                for i in ventas:
-                    print(f"{i['ID']}       {i['Nombre']}               {i['Cantidad']}                     {i['fecha']}")
+                for i in inventario.ventas:
+                    print(f"{i.id_producto}       {i.nombre}               {i.cantidad}                     {i.fecha}")
 
 
 
@@ -377,8 +383,8 @@ def main():
            
         continuar()
     
-    if len(productos):
-        if guardar_datos(productos, ventas):
+    if len(inventario.productos):
+        if guardar_datos(inventario):
             print('\n** Se han guardado los datos con éxito.\n')
         else:
             ('No se han guardado los datos.')
