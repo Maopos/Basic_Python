@@ -1,6 +1,6 @@
 import sys
-from typing import no_type_check_decorator
-from PyQt6.QtCore import QLine
+
+from PyQt6.QtGui import QDoubleValidator
 
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QPushButton, QLabel, QLineEdit
 
@@ -22,11 +22,13 @@ class Ventana_Calculadora(QMainWindow):
 
         self.txt_numero_1 = QLineEdit(self)
         self.txt_numero_1.setFixedWidth(100)
-        self.txt_numero_1.move(150, 50)
+        self.txt_numero_1.move(150, 50)      
+        self.txt_numero_1.setValidator(QDoubleValidator())
 
         self.txt_numero_2 = QLineEdit(self)
         self.txt_numero_2.setFixedWidth(100)
         self.txt_numero_2.move(150, 100)
+        self.txt_numero_2.setValidator(QDoubleValidator())
 
         self.btn_sumar = QPushButton('Sumar', self)
         self.btn_sumar.setFixedWidth(100)
@@ -45,43 +47,11 @@ class Ventana_Calculadora(QMainWindow):
         
 
     def sumar(self):
-        numero_1 = self.txt_numero_1.text().strip()
-        numero_2 = self.txt_numero_2.text().strip()
+        numero_1 = float(self.txt_numero_1.text())
+        numero_2 = float(self.txt_numero_2.text())
 
-        mensaje = QMessageBox()
-        mensaje.setWindowTitle('Algo salió mal...')
-
-        if len(numero_1):
-            if len(numero_2):
-
-                try:
-                    numero_1 = float(numero_1)
-                except:
-                    mensaje.setIcon(QMessageBox.Icon.Warning)
-                    mensaje.setText('El número 1 debe ser un valor numérico...')
-                    mensaje.exec()
-                    return
-
-                try:
-                    numero_2 = float(numero_2)
-                except:
-                    mensaje.setIcon(QMessageBox.Icon.Warning)
-                    mensaje.setText('El número 2 debe ser un valor numérico...')
-                    mensaje.exec()
-                    return
-
-                resultado = numero_1 + numero_2
-                self.lbl_resultado.setText(str(resultado))
-
-            else:
-                mensaje.setIcon(QMessageBox.Icon.Warning)
-                mensaje.setText('Debes digitar el Número 2...')
-                mensaje.exec()
-
-        else:
-            mensaje.setIcon(QMessageBox.Icon.Warning)
-            mensaje.setText('Debes digitar el Número 1...')
-            mensaje.exec()
+        suma = numero_1 + numero_2
+        self.lbl_resultado.setText(str(suma))
 
 
 def main():

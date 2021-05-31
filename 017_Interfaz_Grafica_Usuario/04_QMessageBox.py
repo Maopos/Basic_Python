@@ -21,7 +21,8 @@ class VentanaPrincipal(QMainWindow):
         mensaje = QMessageBox()
         mensaje.setIcon(QMessageBox.Icon.Information) #Information, NoIcon, Question,Warning, Critical
         mensaje.setText('Ha hecho Click sobre el botón!!!')
-        mensaje.setWindowTitle('Mensaje...')
+        mensaje.setDetailedText('Hola..')
+        mensaje.setWindowTitle('sdf')
 
         mensaje.exec()
 
