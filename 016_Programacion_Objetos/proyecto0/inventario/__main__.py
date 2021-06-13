@@ -106,7 +106,6 @@ def cargar_inventario():
 def guardar_datos(inventario):
     with open('inventario/inventario.pickle', 'wb') as f:
         
-
         pickle.dump(inventario, f)
 
 

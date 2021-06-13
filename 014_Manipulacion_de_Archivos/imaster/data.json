@@ -1,25 +1,30 @@
 {
-    "clients": [
+    "Arboleda": [
         {
-            "first_name": "Sigrid",
-            "last_name": "Mannock",
-            "age": 27,
-            "amount": 7.17
-        },
+            "Nike": 300,
+            "Puma": 321,
+            "Adidas": 250
+        }
+    ],
+    "Unicentro": [
         {
-            "first_name": "Joe",
-            "last_name": "Hinners",
-            "age": 31,
-            "amount": [
-                1.9,
-                5.5
-            ]
-        },
+            "Nike": 463,
+            "Puma": 321,
+            "Adidas": 250
+        }
+    ],
+    "Bolivar": [
         {
-            "first_name": "Theodoric",
-            "last_name": "Rivers",
-            "age": 36,
-            "amount": 1.11
+            "Nike": 210,
+            "Puma": 321,
+            "Adidas": 250
+        }
+    ],
+    "Pereira": [
+        {
+            "Nike": 432,
+            "Puma": 321,
+            "Adidas": 250
         }
     ]
 }
