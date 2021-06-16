@@ -1,10 +1,10 @@
 {
     "empleados": [
         {
-            "Documento": 987897,
-            "Nombre": "mauricio",
-            "Correo": "sdgsdfg",
-            "Especialidad": "afdga"
+            "Documento": 1234,
+            "Nombre": "qwerq",
+            "Correo": "qwerq",
+            "Especialidad": "qwer"
         }
     ]
 }
