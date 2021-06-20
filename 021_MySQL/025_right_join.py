@@ -1,6 +1,5 @@
 import mysql.connector
 
-
 print('======================')
 print()
 
@@ -13,7 +12,11 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
-sql = 'SELECT * FROM customers LIMIT 9 OFFSET 0'
+sql = "SELECT \
+  customers.name AS customer, \
+  foods.comidas AS food \
+  FROM customers \
+  RIGHT JOIN foods ON customers.favorites = foods.id"
 
 mycursor.execute(sql)
 
